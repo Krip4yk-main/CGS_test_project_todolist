@@ -1,0 +1,40 @@
+#!/bin/sh
+
+echo "=============================================================================================================="
+echo "Hook setupping has been started..."
+
+OS="`uname`"
+case $OS in
+  'Linux')
+    OS='Linux'
+    alias ls='ls --color=auto'
+    ;;
+  'FreeBSD')
+    OS='FreeBSD'
+    alias ls='ls -G'
+    ;;
+  'WindowsNT')
+    OS='Windows'
+    ;;
+  'Darwin')
+    OS='Mac'
+    ;;
+  'SunOS')
+    OS='Solaris'
+    ;;
+  'AIX') ;;
+  *) ;;
+esac
+
+cp ./hooks/pre-commit .git/hooks/
+cp ./hooks/commit-msg .git/hooks/
+
+case $OS in
+  'Windows') ;;
+  *)
+    chmod +x .git/hooks/pre-commit
+    chmod +x .git/hooks/commit-msg
+    ;;
+esac
+
+echo "\t\033[32m Success! \033[0m"
